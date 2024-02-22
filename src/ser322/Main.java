@@ -4,6 +4,8 @@
  * Team 11
  * SER 322 - Summer Session C
  * Instructor Moubayed
+ *
+ * Description: A JDBC command-line interface to do various SQL statements.
  */
 
 package ser322;
