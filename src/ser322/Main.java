@@ -16,9 +16,9 @@ import java.util.*;
 
 public class Main
 {
-    private static final String DB_URL = ""; // TODO: Type in the URL once we know it
-    private static final String USERNAME = ""; // TODO: Type in the USERNAME once we know it
-    private static final String PASSWORD = ""; // TODO: Type in the PASSWORD once we know it
+    private static final String DB_URL = "jdbc:mysql://34.28.33.230:3306/warehouse"; // TODO: Type in the URL once we know it
+    private static final String USERNAME = "root"; // TODO: Type in the USERNAME once we know it
+    private static final String PASSWORD = "Deliverable4"; // TODO: Type in the PASSWORD once we know it
 
     public static void main(String[] args)
     {
