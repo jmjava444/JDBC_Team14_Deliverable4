@@ -13,16 +13,32 @@ package ser322;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 public class Main
 {
-    private static final String DB_URL = "jdbc:mysql://34.28.33.230:3306/warehouse"; // TODO: Type in the URL once we know it
-    private static final String USERNAME = "root"; // TODO: Type in the USERNAME once we know it
-    private static final String PASSWORD = "Deliverable4"; // TODO: Type in the PASSWORD once we know it
+    private static final String DB_URL = "jdbc:mysql://34.28.33.230:3306/warehouse";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "Deliverable4";
 
     public static void main(String[] args)
     {
         Scanner in = new Scanner(System.in);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.err.println("MySQL JDBC driver not found");
+            e.printStackTrace();
+            return;
+        }
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD)) {
+            // Connection successful
+            System.out.println("Connected to the database!");
+            // You can perform database operations here
+
+
         JDBCDriver driver = new JDBCDriver(DB_URL, USERNAME, PASSWORD);
         int userMenuChoice = 0;
 
@@ -53,7 +69,7 @@ public class Main
             {
                 case 1:
                     System.out.println("Case 1");
-//                    driver.addData(); // TODO: Method call may need adjustment here
+                      driver.addData(conn); // TODO: Method call may need adjustment here
                     break;
                 case 2:
                     System.out.println("Case 2");
@@ -69,7 +85,7 @@ public class Main
                     break;
                 case 5:
                     System.out.println("Case 5");
-//                    driver.deleteData(); // TODO: Method call may need adjustment here
+                    driver.deleteData(conn); // TODO: Method call may need adjustment here
                     break;
                 case 6:
                     System.exit(0);
@@ -78,6 +94,10 @@ public class Main
                     System.out.println("User entered an incorrect integer value, please try again.");
                     break;
             }
+        }
+        } catch (SQLException e) {
+            System.err.println("Connection failed!");
+            e.printStackTrace();
         }
     }
 }

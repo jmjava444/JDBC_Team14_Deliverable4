@@ -191,9 +191,34 @@ public class JDBCDriver implements JDBCDriverInterface
      * like to edit another piece of data on the DB.
      */
     @Override
-    public void editData()
-    {
+    public void editData(Connection connection) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Enter the table you want to edit data in: ");
+            String tableName = scanner.nextLine().trim();
 
+            System.out.print("Enter the column name to update: ");
+            String columnName = scanner.nextLine().trim();
+
+            System.out.print("Enter the new value: ");
+            String newValue = scanner.nextLine().trim();
+
+            System.out.print("Enter the condition to locate the row(s) to update: ");
+            String condition = scanner.nextLine().trim();
+
+            String updateQuery = "UPDATE " + tableName + " SET " + columnName + " = ? WHERE " + condition;
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+                preparedStatement.setString(1, newValue);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+                System.out.println(rowsAffected + " row(s) updated successfully.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            scanner.close();
+        }
     }
     /**
      * This function will allow the user to search for specific data in the SQL DB. The function should ask what table
@@ -350,17 +375,71 @@ public class JDBCDriver implements JDBCDriverInterface
      * like to delete another piece of data from the DB.
      */
     @Override
-    public void deleteData()
+    public void deleteData(Connection connection)
     {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Enter the table from which you want to delete data: ");
+            String tableName = scanner.nextLine().trim();
 
+            System.out.print("Enter the condition to locate the row(s) to delete: ");
+            String condition = scanner.nextLine().trim();
+
+            String deleteQuery = "DELETE FROM " + tableName + " WHERE " + condition;
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
+                int rowsAffected = preparedStatement.executeUpdate();
+                System.out.println(rowsAffected + " row(s) deleted successfully.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            scanner.close();
+        }
     }
     /**
      * This function will allow the user to list data from certain tables and in specified ranges. It should display the
      * results nicely.
      */
     @Override
-    public void listData()
-    {
+    public void listData(Connection connection) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            System.out.print("Enter the table name you want to list data from: ");
+            String tableName = scanner.nextLine().trim();
 
+            System.out.print("Enter the number of rows you want to fetch: ");
+            int numRows = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+
+            String selectQuery = "SELECT * FROM " + tableName + " LIMIT ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setInt(1, numRows);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    ResultSetMetaData metaData = resultSet.getMetaData();
+                    int columnCount = metaData.getColumnCount();
+
+                    // Print column headers
+                    for (int i = 1; i <= columnCount; i++) {
+                        System.out.print(metaData.getColumnLabel(i) + "\t");
+                    }
+                    System.out.println();
+
+                    // Print rows
+                    while (resultSet.next()) {
+                        for (int i = 1; i <= columnCount; i++) {
+                            System.out.print(resultSet.getString(i) + "\t");
+                        }
+                        System.out.println();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            scanner.close();
+        }
     }
 }
