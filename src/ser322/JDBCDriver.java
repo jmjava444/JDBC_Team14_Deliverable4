@@ -10,11 +10,25 @@
 
 package ser322;
 
-import java.io.*;
 import java.sql.*;
+import java.io.*;
+import java.util.*;
 
 public class JDBCDriver implements JDBCDriverInterface
 {
+    private String url;
+    private String username;
+    private String password;
+
+    /**
+     * Constructor
+     */
+    public JDBCDriver(String pURL, String pUsername, String pPassword)
+    {
+        this.url = pURL;
+        this.username = pUsername;
+        this.password = pPassword;
+    }
     /**
      * This function will allow the user to add data to the SQL DB by asking which table to add to, what type of data
      * to add, and what the element is. In addition, it should follow up with asking the user if they would like to add
