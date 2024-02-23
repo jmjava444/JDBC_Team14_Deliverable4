@@ -10,6 +10,8 @@
 
 package ser322;
 
+import java.sql.Connection;
+
 public interface JDBCDriverInterface
 {
     /**
@@ -17,7 +19,7 @@ public interface JDBCDriverInterface
      * to add, and what the element is. In addition, it should follow up with asking the user if they would like to add
      * another piece of data to the DB.
      */
-    void addData(); // TODO: change parameters or return type to suit the method.
+    void addData(Connection connection); // TODO: change parameters or return type to suit the method.
 
     /**
      * This function will allow the user to edit data on the SQL DB by asking which table to edit on, what type of data
@@ -30,7 +32,7 @@ public interface JDBCDriverInterface
      * This function will allow the user to search for specific data in the SQL DB. The function should ask what table
      * to search, and what the search requirements are. It should then display the found results.
      */
-    void searchData(); // TODO: change parameters or return type to suit the method.
+    void searchData(Connection connection); // TODO: change parameters or return type to suit the method.
 
     /**
      * This function will allow the user to delete data from the SQL DB by asking which table to delete from, what type
