@@ -29,7 +29,7 @@ public class Main
         System.out.println("===============JDBC Database Editor===============");
         System.out.println("==by Joshua McKenzie, Estevan Perez, and Dung Ho==");
 
-        while(userMenuChoice != 6)
+        while(true)
         {
             System.out.println("\nMAIN MENU\n");
             System.out.println("Choose from the menu below:");
