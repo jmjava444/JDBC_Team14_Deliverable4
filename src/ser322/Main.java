@@ -13,16 +13,33 @@ package ser322;
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 public class Main
 {
-    private static final String DB_URL = "jdbc:mysql://34.28.33.230:3306/warehouse"; // TODO: Type in the URL once we know it
-    private static final String USERNAME = "root"; // TODO: Type in the USERNAME once we know it
-    private static final String PASSWORD = "Deliverable4"; // TODO: Type in the PASSWORD once we know it
+    private static final String DB_URL = "jdbc:mysql://34.28.33.230:3306/warehouse";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "Deliverable4";
 
     public static void main(String[] args)
     {
         Scanner in = new Scanner(System.in);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.err.println("MySQL JDBC driver not found");
+            e.printStackTrace();
+            return;
+        }
+        try (Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD)) {
+            // Connection successful
+            System.out.println("Connected to the database!");
+            // You can perform database operations here
+        } catch (SQLException e) {
+            System.err.println("Connection failed!");
+            e.printStackTrace();
+        }
         JDBCDriver driver = new JDBCDriver(DB_URL, USERNAME, PASSWORD);
         int userMenuChoice = 0;
 
