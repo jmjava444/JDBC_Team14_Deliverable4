@@ -1,3 +1,13 @@
+/**
+ * @author Joshua McKenzie
+ * Project Deliverable 4
+ * Team 11
+ * SER 322 - Summer Session C
+ * Instructor Moubayed
+ *
+ * Description: The interface for the JDBC Driver
+ */
+
 package ser322;
 
 public interface JDBCDriverInterface
