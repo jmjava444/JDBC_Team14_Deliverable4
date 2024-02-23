@@ -389,7 +389,7 @@ public class JDBCDriver implements JDBCDriverInterface
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
                 int rowsAffected = preparedStatement.executeUpdate();
-                System.out.println(rowsAffected + " row(s) deletedsuccessfully.");
+                System.out.println(rowsAffected + " row(s) deleted successfully.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
