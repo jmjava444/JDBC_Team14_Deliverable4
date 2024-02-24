@@ -42,21 +42,23 @@ public class JDBCDriver implements JDBCDriverInterface
         String input = scanner.next();
         
         if(input.equals("Department") ) {
-        	String sqlStatementDepartment = "INSERT INTO Department (col1, col2, col3, col4) VALUES (?, ?, ?, ?)";
+        	String sqlStatementDepartment = "INSERT INTO Department (Dep_Num, Dep_Name, Office_Address, Dep_Manager) VALUES (?, ?, ?, ?)";
         	try (PreparedStatement preparedStatement = connection.prepareStatement(sqlStatementDepartment)) {
         		System.out.println("Now adding to Department table.");
             	System.out.println("\t Please insert Department Number");
             	int Dep_Num = scanner.nextInt();
+            	scanner.nextLine();
             	System.out.println("\t Please insert Department Name");
-            	String Dep_Name = scanner.next();
+            	String Dep_Name = scanner.nextLine();
             	System.out.println("\t Please insert Office Address");
-            	String Office_Address = scanner.next();
-            	System.out.println("\t Please insert Department Manager");
-            	String Dep_Manager = scanner.next();
+            	String Office_Address = scanner.nextLine();
+            	//System.out.println("\t Please insert Department Manager");
+            	//int Dep_Manager = scanner.nextInt();
+            	//scanner.nextLine();
             	preparedStatement.setInt(1, Dep_Num);
             	preparedStatement.setString(2, Dep_Name);
             	preparedStatement.setString(3, Office_Address);
-            	preparedStatement.setString(4, Dep_Manager);
+            	preparedStatement.setString(4, null);
             	int rowChanges = preparedStatement.executeUpdate();
             	if(rowChanges > 0) {
             		 System.out.println("Data inserted!");
@@ -68,22 +70,25 @@ public class JDBCDriver implements JDBCDriverInterface
         	}
         	
         }else if (input.equals("Employee")){
-        	String sqlStatementEmployee = "INSERT INTO Employee (col1, col2, col3, col4, col5, col6) "
+        	String sqlStatementEmployee = "INSERT INTO Employee (Emp_ID, SSN, First_Name, Last_Name, Address, Dep_Num) "
         			+ "VALUES (?, ?, ?, ?, ?, ?)";
         	try (PreparedStatement preparedStatement = connection.prepareStatement(sqlStatementEmployee)) {
         		System.out.println("Now adding to Department table.");
             	System.out.println("\t Please insert Employee ID");
             	int Emp_ID = scanner.nextInt();
+            	scanner.nextLine();
             	System.out.println("\t Please insert SSN (as one complete number ex 123456789)");
             	int SSN = scanner.nextInt();
+            	scanner.nextLine();
             	System.out.println("\t Please insert First Name");
-            	String First_Name = scanner.next();
+            	String First_Name = scanner.nextLine();
             	System.out.println("\t Please insert Last Name");
-            	String Last_Name = scanner.next();
+            	String Last_Name = scanner.nextLine();
             	System.out.println("\t Please insert Address");
-            	String Address = scanner.next();
+            	String Address = scanner.nextLine();
             	System.out.println("\t Please insert Department Number");
             	int Dep_Num = scanner.nextInt();
+            	scanner.nextLine();
             	preparedStatement.setInt(1, Emp_ID);
             	preparedStatement.setInt(2, SSN);
             	preparedStatement.setString(3, First_Name);
@@ -101,16 +106,17 @@ public class JDBCDriver implements JDBCDriverInterface
         	}
         	
         }else if (input.equals("Product")){
-        	String sqlStatementProduct = "INSERT INTO Product (col1, col2, col3) "
+        	String sqlStatementProduct = "INSERT INTO Product (SKU, Product_Name, Product_Description) "
         			+ "VALUES (?, ?, ?)";
         	try (PreparedStatement preparedStatement = connection.prepareStatement(sqlStatementProduct)) {
         		System.out.println("Now adding to Product table.");
             	System.out.println("\t Please insert SKU");
             	int SKU = scanner.nextInt();
+            	scanner.nextLine();
             	System.out.println("\t Please insert Product Name");
-            	String Product_Name = scanner.next();
+            	String Product_Name = scanner.nextLine();
             	System.out.println("\t Please insert Product Description");
-            	String Product_Description = scanner.next();
+            	String Product_Description = scanner.nextLine();
             	preparedStatement.setInt(1, SKU);
             	preparedStatement.setString(2, Product_Name);
             	preparedStatement.setString(3, Product_Description);
@@ -124,18 +130,22 @@ public class JDBCDriver implements JDBCDriverInterface
         		e.printStackTrace();
         	}
         }else if (input.equals("Exports")){
-        	String sqlStatementExports = "INSERT INTO Exports (col1, col2, col3, col4) "
+        	String sqlStatementExports = "INSERT INTO Exports (Order_No, Dep_Num, SKU, Quantity) "
         			+ "VALUES (?, ?, ?, ?)";
         	try (PreparedStatement preparedStatement = connection.prepareStatement(sqlStatementExports)) {
         		System.out.println("Now adding to Exports table.");
             	System.out.println("\t Please insert Order Number");
             	int Order_No = scanner.nextInt();
+            	scanner.nextLine();
             	System.out.println("\t Please insert Department Number");
             	int Dep_Num = scanner.nextInt();
+            	scanner.nextLine();
             	System.out.println("\t Please insert SKU");
             	int SKU = scanner.nextInt();
+            	scanner.nextLine();
             	System.out.println("\t Please insert Quantity");
             	int Quantity = scanner.nextInt();
+            	scanner.nextLine();
             	preparedStatement.setInt(1, Order_No);
             	preparedStatement.setInt(2, Dep_Num);
             	preparedStatement.setInt(3, SKU);
@@ -150,16 +160,19 @@ public class JDBCDriver implements JDBCDriverInterface
         		e.printStackTrace();
         	}
         }else if (input.equals("Inventory")){
-        	String sqlStatementInventory = "INSERT INTO Inventory (col1, col2, col3) "
+        	String sqlStatementInventory = "INSERT INTO Inventory (SKU, Quantity, Dep_Num) "
         			+ "VALUES (?, ?, ?)";
         	try (PreparedStatement preparedStatement = connection.prepareStatement(sqlStatementInventory)) {
         		System.out.println("Now adding to Inventory table.");
             	System.out.println("\t Please insert SKU");
             	int SKU = scanner.nextInt();
+            	
             	System.out.println("\t Please insert Quantity");
             	int Quantity = scanner.nextInt();
+            	scanner.nextLine();
             	System.out.println("\t Please insert Department Number");
             	int Dep_Num = scanner.nextInt();
+            	scanner.nextLine();
             	preparedStatement.setInt(1, SKU);
             	preparedStatement.setInt(2, Quantity);
             	preparedStatement.setInt(3, Dep_Num);
@@ -183,7 +196,6 @@ public class JDBCDriver implements JDBCDriverInterface
         }else{
         	System.out.println("Exiting data adding.");
         }
-        scanner.close();
     }
     /**
      * This function will allow the user to edit data on the SQL DB by asking which table to edit on, what type of data
@@ -220,6 +232,17 @@ public class JDBCDriver implements JDBCDriverInterface
             scanner.close();
         }
     }
+    
+    
+    private static boolean isValidTable(String input) {
+        return input.equalsIgnoreCase("Department") ||
+               input.equalsIgnoreCase("Employee") ||
+               input.equalsIgnoreCase("Product") ||
+               input.equalsIgnoreCase("Exports") ||
+               input.equalsIgnoreCase("Inventory");
+    }
+    
+    
     /**
      * This function will allow the user to search for specific data in the SQL DB. The function should ask what table
      * to search, and what the search requirements are. It should then display the found results.
@@ -230,27 +253,33 @@ public class JDBCDriver implements JDBCDriverInterface
         System.out.println("Valid Tables: Department, Employee, Product, Exports, and Inventory");
 
         Scanner scanner = new Scanner(System.in);
-        String tableInput = scanner.next().trim();
+        String tableInput = scanner.nextLine();
 
-        while (!tableInput.equalsIgnoreCase("Department") ||
-               !tableInput.equalsIgnoreCase("Employee") ||
-               !tableInput.equalsIgnoreCase("Product") ||
-               !tableInput.equalsIgnoreCase("Exports") ||
-               !tableInput.equalsIgnoreCase("Inventory")) {
-            System.out.println("Invalid input. Please try again.");
-            tableInput = scanner.next().trim();
-        }
+        while (!isValidTable(tableInput)){
+            System.out.println("Enter table name: ");
+            tableInput = scanner.nextLine();
+            
+            if (!isValidTable(tableInput)) {
+                System.out.println("Invalid input. Please try again." + isValidTable(tableInput));
+            }
 
-        String sqlStatement = "";
+        } 
+
+        
+        System.out.println("Please enter a condition to search for.");
+        System.out.println("\t Ex. Dep_Num = 0");
+        System.out.println("\t Ex. First_Name = Bob");
+        String condition = scanner.nextLine();
+
+        String sqlStatement = "SELECT * FROM " + tableInput + " WHERE " + condition;
+        
+        
+        
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement)) {
-            preparedStatement.setString(1, tableInput);
             System.out.println("Now searching " + tableInput + " table.");
-            System.out.println("Please enter a condition to search for.");
-            System.out.println("\t Ex. Dep_Num == 0");
-            System.out.println("\t Ex. First_Name == Bob");
+           
 
-            String condition = scanner.next().trim();
-
+            
             switch (tableInput) {
                 case "Department":
                     sqlStatement = "SELECT * FROM Department WHERE " + condition;
@@ -365,8 +394,6 @@ public class JDBCDriver implements JDBCDriverInterface
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            scanner.close();
         }
     }
     /**

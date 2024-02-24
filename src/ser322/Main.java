@@ -80,7 +80,7 @@ public class Main
                         break;
                     case 3:
                         System.out.println("Case 3");
-                        //                    driver.searchData(); // TODO: Method call may need adjustment here
+                                           driver.searchData(conn); // TODO: Method call may need adjustment here
                         break;
                     case 4:
                         System.out.println("Case 4");
